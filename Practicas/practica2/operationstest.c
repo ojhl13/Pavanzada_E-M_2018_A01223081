@@ -18,7 +18,7 @@ void main( void)
 
 	/*Test substraction*/
 	int d = 2147483647;
-	int f = 2;
+	int f = 2	;
 	int resultSubstraction = subtraction(a,b);
 	int expectedsubtraction = a + b;
 	printTestMessage( resultSubstraction == expectedsubtraction,
