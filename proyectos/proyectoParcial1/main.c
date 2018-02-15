@@ -32,20 +32,33 @@ static void getText(unsigned char * ptrArray)
 	printf("%s\n","inserta texto:" );
 	
 	fgets(ptrArray, (SIZEINPUTARRAY) , stdin);
-	printf("%i\n",10001);
+	
 }
 
-static int  checkArray4ValidData (unsigned char * ptrArray)
+static int  checkArray4ValidData (unsigned char * ptrArray2)
 {	
 	unsigned char data2return = 0;
+	unsigned int count=0;
+	printf("%s\n", "startcheck");
 	do{
-		data2return |=    checkMayus( ptrArray ) 
-						| checkMinus( ptrArray ) 
-						| checkNums( ptrArray )
-						| checkSpecialchars( ptrArray );
+		if (*ptrArray2 == EOF)
+		{
+			break;
+		}
 	
-	}while((*ptrArray++) != EOF );
-	printf("%i", data2return);
+		data2return =	checkMayus( ptrArray2 ) 
+						| checkMinus( ptrArray2 ) 
+						| checkNums( ptrArray2 )
+						| checkSpecialchars( ptrArray2 );
+	if (data2return)
+	{
+		printf("%c\n",data2return );
+		putchar(*ptrArray2);
+	}
+	ptrArray2++;
+
+	}while((count++) < SIZEINPUTARRAY );
+	
 	return data2return;
 
 }
@@ -54,14 +67,15 @@ int main ()
 {
 	int value= 0;
 	getText(inputArray);
-	printf("%s\n", inputArray );
 
-	if(0 != checkArray4ValidData(inputArray) )
+	if(checkArray4ValidData(inputArray) )
 	{
 		printf("%s\n", "Error input");
 		return 0; // se que esto no se hace pero no tuve tiempo de corregirlo
 	}
+	printf("%s\n","valid data" );
 	value = proccesData(inputArray,outputArray);
+	printf("%s\n","data processed" );
 	if(value)
 	{
 		printf("%s\n","Error procesando datos" );
@@ -76,7 +90,8 @@ int proccesData(unsigned char * ptrinArray,unsigned char * ptroutArray)
 {
 	unsigned char data2return = 2;
 	unsigned char spacefree = SIZEOUTPUTARRAY;
-	unsigned char * ptrArrayout2move=ptroutArray;
+	unsigned char * ptrArrayout2move;
+	ptrArrayout2move=ptroutArray;
 	printf("%s\n","proess data" );
 	do{
 			printf("%d", spacefree );
@@ -140,11 +155,11 @@ int checkMinus(unsigned char * ptrArray)
 	unsigned char data2return = 2;
 	if (STARTMINUS <*ptrArray < FINISHMINUS )
 	{
-		data2return = 1;
+		data2return = 0;
 	}
 	else
 	{
-		data2return = 0;
+		data2return = 1;
 	}
 	return data2return;
 }
