@@ -1,7 +1,7 @@
 #include <stdio.h>
 #define SIZEINPUTARRAY 	10001
 #define SIZEOUTPUTARRAY 80
-#define SIZE 			11
+#define SIZE 			10
 #define STARTMAYUS 		'A'//65
 #define FINISHMAYUS 	'Z'//90
 #define STARTMINUS 		'a'//97
@@ -15,7 +15,7 @@ int checkMayus ( char * ptrArray);
 int checkMinus(unsigned char * ptrArray);
 int checkNums(unsigned char * ptrArray);
 int checkSpecialchars(unsigned char * ptrArray);
-int proccesData(unsigned char * ptrinArray,unsigned char * ptroutArray);
+int proccesData( char * ptrinArray, char * ptroutArray);
 static char inputArray[SIZEINPUTARRAY];
 static char outputArray[SIZEOUTPUTARRAY];
 
@@ -24,7 +24,14 @@ static void getText(unsigned char * ptrArray)
 {
 	printf("%s\n","inserta texto:" );
 	
-	fgets(inputArray, (SIZEINPUTARRAY) , stdin);
+	if(fgets(inputArray, (SIZEINPUTARRAY) , stdin))
+	{
+
+	}
+	else
+	{
+		printf("%s\n", "errror leyendo teclado" );
+	}
 	
 }
 
@@ -32,114 +39,89 @@ static void getText(unsigned char * ptrArray)
 static int  checkArray4ValidData ( char * ptrArray)
 {	
 	unsigned char data2return = 0;
+	char *word= ptrArray;
 
-	while((*ptrArray) != '\n' )
+	while(*word != '\n' )
 	{
 		
-		data2return |=    checkMayus( ptrArray ) 
-						& checkMinus( ptrArray ) 
-						& checkNums( ptrArray )
-						& checkSpecialchars( ptrArray );
-		ptrArray++;
+		data2return |=    checkMayus( word ) 
+						& checkMinus( word ) 
+						& checkNums( word )
+						& checkSpecialchars( word );
+		word++;
 	}
 	
 	return data2return;
 
 }
-//
-//static int  checkArray4ValidData (unsigned char * ptrArray2)
-//{	
-//	unsigned char data2return = 0;
-//	unsigned int count=0;
-//	do{
-//		if ((*ptrArray2)  == '\0')
-//		{
-//			printf("%s\n", "break:");
-//			break;
-//		}
-//		data2return =	 checkMayus( ptrArray2 ) 
-//						| checkMinus( ptrArray2 ) 
-//						| checkNums( ptrArray2 )
-//						| checkSpecialchars( ptrArray2 );
-//	printf("%i\n",data2return );
-//	if (data2return)
-//	{
-//		printf("%c\n",data2return );
-//		putchar(*ptrArray2);
-//	}
-//	ptrArray2++;
-//
-//	}while((count++) < SIZEINPUTARRAY-1 );
-//	
-//	return data2return;
-//
-//}
-//
+
 int main ()
 {
 	int value= 0;
 	getText(inputArray);
 	value = checkArray4ValidData(inputArray);
-	printf("%i\n" ,value);
 	if(value )
 	{
 		printf("%s\n", "Error input");
 		return 0; // se que esto no se hace pero no tuve tiempo de corregirlo
 	}
-	printf("%s\n","valid data" );
 	value = proccesData(inputArray,outputArray);
-	printf("%s\n","data processed" );
-	if(value)
-	{
-		printf("%s\n","Error procesando datos" );
-		return 0; // se que esto no se hace pero no tuve tiempo de corregirlo
-	}
-	printf("%s\n",outputArray );
-
+	printf("%s\n", (outputArray) );
 	return 0;
 }
 
-int proccesData(unsigned char * ptrinArray,unsigned char * ptroutArray)
+int proccesData( char * ptrinArray, char * ptroutArray)
 {
+	char *word= ptrinArray;
 	unsigned char data2return = 2;
-	unsigned char spacefree = SIZEOUTPUTARRAY;
-	unsigned char * ptrArrayout2move;
+	unsigned char spacefree = SIZEOUTPUTARRAY+1;
+	char * ptrArrayout2move;
 	ptrArrayout2move=ptroutArray;
-	printf("%s\n","proess data" );
-	do{
-			printf("%d", spacefree );
+	
+	while(*word != '\n' )
+	{
+		
+			
 		if(0 == spacefree)
 		{
-			ptrArrayout2move=ptroutArray;
+			ptroutArray=ptrArrayout2move;
 			spacefree = SIZEOUTPUTARRAY;
 		}
 
 
-		if ((specialchars[9] == *ptrinArray))
+		if (specialchars[9] == *word)
 		{	
+			
 			if (0 < spacefree )
 			{
+				
 				spacefree++;
-				ptrArrayout2move--;
-
+				ptroutArray--;// kill edniands 2 hours of my time :'(
+				data2return=0;
+				
+				
 			}
 			
+			
 		}
-		else if (specialchars[10] == *ptrinArray)
+		else if (specialchars[8] == *word)
 		{
 			spacefree--;
-			ptrArrayout2move++;
+			ptroutArray++;// kill edniands
+			data2return=0;
 		}
 		else
 		{
 			spacefree--;
-			(*ptroutArray) = (*ptrinArray) ;
-		
-			printf("%s",(*ptrinArray));
-			ptrArrayout2move++;
+			(*ptroutArray) = (*word) ;
+			
+			ptroutArray++;
+			
 		}
-		
-	}while((*ptrinArray++) != EOF );
+	word++;
+	}
+
+
 
 	return data2return;
 
@@ -194,8 +176,7 @@ int checkNums(unsigned char * ptrArray)
 int checkSpecialchars(unsigned char * ptrArray)
 {
 	unsigned char data2return = 1;
-
-	for (int i = 0; i < SIZE-1; ++i)
+	for (int i = 0; i < (SIZE) ; i++)
 	{
 		
 		if (specialchars[i] == *ptrArray)

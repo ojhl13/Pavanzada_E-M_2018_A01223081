@@ -13,10 +13,10 @@ proc reset {} {exec tput sgr0 > /dev/tty}
 eval spawn [lrange $argv 0 end]
 
 expect "inserta texto:" {foreground green; puts "PASSED";reset} default {foreground red;puts "FAILED";reset}
-send "holas2222.\n"
-expect "holas2222." {foreground green; puts "PASSED";reset} default {foreground red;puts "FAILED";reset}
+#send "holas2<.\n"
+#expect "holas." {foreground green; puts "PASSED";reset} default {foreground red;puts "FAILED";reset}
 
 
 
-#send ">><<<Look for clothes at the <<<<<<<<<<<<<<<second floor. <<<<<<<Fresh pizza and <<<<<<<<<<<<<<<<hamburger at a shop right to <<<<<<<<<<<<<the entrance. Call <<<<<<<<<< 123<-456<-8790 <<<<<<<<<<<<<<<<to order <<<<<<<<<<<<<<<<<computers< and office<<<<<<< chairs.\n"
-#expect "Look for second hamburger at computer and chairs.790" {foreground green; puts "PASSED";reset} default {foreground red;puts "FAILED";reset}
+send ">>><<<Look for clothes at the <<<<<<<<<<<<<<<second floor. <<<<<<<Fresh pizza and <<<<<<<<<<<<<<<<hamburger at a shop right to <<<<<<<<<<<<<the entrance. Call <<<<<<<<<< 123<-456<-8790 <<<<<<<<<<<<<<<<to order <<<<<<<<<<<<<<<<<computers< and office<<<<<<< chairs.\n"
+expect "Look for second hamburger at computer and chairs.790" {foreground green; puts "PASSED";reset} default {foreground red;puts "FAILED";reset}
