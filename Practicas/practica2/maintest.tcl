@@ -1,4 +1,4 @@
-#!C:\cygwin64\bin\expect.exe
+#!usr/bin/expect -f
 # For colors
 proc capability cap {expr {![catch {exec tput -S << $cap}]}}
 proc colorterm {} {expr {[capability setaf] && [capability setab]}}
