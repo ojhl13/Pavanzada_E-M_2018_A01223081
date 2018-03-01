@@ -1,4 +1,4 @@
-#!usr/bin/expect -f
+#!/usr/bin/expect -f
 # For colors
 proc capability cap {expr {![catch {exec tput -S << $cap}]}}
 proc colorterm {} {expr {[capability setaf] && [capability setab]}}
@@ -8,14 +8,10 @@ proc foreground x {exec tput -S << "setaf $::color($x)" > /dev/tty}
 proc background x {exec tput -S << "setab $::color($x)" > /dev/tty}
 proc reset {} {exec tput sgr0 > /dev/tty}
 
-#Test the program
-eval spawn [lrange $argv 0 end]
 
 #Put your test case here
+eval spawn [lrange $argv 0 end]
 
-expect "What is the operation?" {foreground green; puts "PASSED";reset} default {foreground red;puts "FAILED";reset}
-send "add\r"
-send "5 4\r"
-expect "result: 9" {foreground green; puts "PASSED";reset} default {foreground red;puts "FAILED";reset}
+expect "Hello from main" {foreground green; puts "PASSED";reset} default {foreground red;puts "FAILED";reset}
 
 
