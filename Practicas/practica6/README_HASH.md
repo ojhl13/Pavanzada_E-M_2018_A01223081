@@ -88,3 +88,7 @@ get
 	|-> null entregado
 	
 
+inWord
+
+
+upsert

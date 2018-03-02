@@ -39,12 +39,28 @@ static char * testHashInsert() {
  return 0;
 }
 
+static char * testHashGet() {
+ int sizeHash = 1;
+ int *value;
+ int *noValue;
+ HashInt hash;
+ hashInit(&hash,sizeHash);
+ hashInsert(&hash,"cuarenta",40);
+ hashInsert(&hash,"cincuenta",50);
+ value = ()hashGet(&hash,"cincuenta");
+ noValue = hashGet(&hash,"cien")
+ muAssert("error, value must be 50", *value == 50);
+ muAssert("error, value must be NULL", value == NULL);
+  return 0;
+}
+
 
 
 
 static char * allTests() {
  muRunTest(testHashInit);
- muRunTest(testHashInsert);
+// muRunTest(testHashInsert);
+// muRunTest(testHashGet);
  return 0;
 }
 
