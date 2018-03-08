@@ -17,5 +17,5 @@ typedef struct h {
 } HashInt;
 
 void hashInit(HashInt *,int);
-void hashInsert(HashInt *,char *int);
+void hashInsert(HashInt *,char *,int);
 int *hashGet(HashInt *,char *);

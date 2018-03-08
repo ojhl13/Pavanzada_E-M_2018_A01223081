@@ -47,8 +47,8 @@ static char * testHashGet() {
  hashInit(&hash,sizeHash);
  hashInsert(&hash,"cuarenta",40);
  hashInsert(&hash,"cincuenta",50);
- value = ()hashGet(&hash,"cincuenta");
- noValue = hashGet(&hash,"cien")
+ value = hashGet(&hash,"cincuenta");
+ noValue = hashGet(&hash,"cien");
  muAssert("error, value must be 50", *value == 50);
  muAssert("error, value must be NULL", value == NULL);
   return 0;
@@ -59,25 +59,48 @@ static char * testHashGet() {
 
 static char * allTests() {
  muRunTest(testHashInit);
-// muRunTest(testHashInsert);
-// muRunTest(testHashGet);
+ muRunTest(testHashInsert);
+ muRunTest(testHashGet);
  return 0;
 }
 
 int main(int argc, char **argv) {
  char *result = allTests();
  if (result != 0) {
- printf("-_-_-_-_-_-_-_,------, o \n");
- printf("_-_-_-_-_-_-_-| /\\_/\\ \n");
- printf("-_-_-_-_-_-_-~|__( X .X) + + \n");
- printf("_-_-_-_-_-_-_- \"\" \"\" \n");
- printf(KRED "✗ %s \n" RESET, result);
+printf("░░░░░░░░░░░░░░░░░░░░░░█████████\n");
+printf("░░░░░░░░░░░░░░░░░░░░███▒▒▒▒▒▒▒▒███\n");
+printf("░░░░░░░░░░░░░░░░░███▒▒▒▒▒▒▒▒▒▒▒▒▒███\n");
+printf("░░░░░░░░░░░░░░░██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██\n");
+printf("░░░░░█████░░░░██▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒███\n");
+printf("░░░░░█▒▒▒█░░░█▒▒▒▒▒▒████▒▒▒▒████▒▒▒▒▒▒██\n");
+printf("░░░█████████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██\n");
+printf("░░░█▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒██\n");
+printf("░██▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██\n");
+printf("██▒▒▒███████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██\n");
+printf("█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒████████▒▒▒▒▒▒▒██\n");
+printf("██▒▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒██▒▒▒▒▒▒▒▒██▒▒▒▒██\n");
+printf("░█▒▒▒███████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██\n");
+printf("░██▒▒▒▒▒▒▒▒▒▒████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█\n");
+printf("░░████████████░░░█████████████████\n");
+printf(KRED "✗ %s \n" RESET, result);
  }
  else {
- printf("-_-_-_-_-_-_-_,------, o \n");
- printf("_-_-_-_-_-_-_-| /\\_/\\ \n");
- printf("-_-_-_-_-_-_-~|__( ^ .^) + + \n");
- printf("_-_-_-_-_-_-_- \"\" \"\" \n");
+
+printf("░░░░░░░░░░░░░░░░░░░░░░█████████\n");
+printf("░░███████░░░░░░░░░░███▒▒▒▒▒▒▒▒███\n");
+printf("░░█▒▒▒▒▒▒█░░░░░░░███▒▒▒▒▒▒▒▒▒▒▒▒▒███\n");
+printf("░░░█▒▒▒▒▒▒█░░░░██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██\n");
+printf("░░░░█▒▒▒▒▒█░░░██▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒███\n");
+printf("░░░░░█▒▒▒█░░░█▒▒▒▒▒▒████▒▒▒▒████▒▒▒▒▒▒██\n");
+printf("░░░█████████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██\n");
+printf("░░░█▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒██\n");
+printf("░██▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒██▒▒▒▒▒▒▒▒▒▒██▒▒▒▒██\n");
+printf("██▒▒▒███████████▒▒▒▒▒██▒▒▒▒▒▒▒▒██▒▒▒▒▒██\n");
+printf("█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒████████▒▒▒▒▒▒▒██\n");
+printf("██▒▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██\n");
+printf("░█▒▒▒███████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██\n");
+printf("░██▒▒▒▒▒▒▒▒▒▒████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█\n");
+printf("░░████████████░░░█████████████████\n");
  printf(KGRN " ✓ ALL TESTS PASSED \n" RESET);
  }
  printf("Tests run: %d\n", testsRun);
