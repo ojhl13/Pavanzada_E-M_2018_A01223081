@@ -3,62 +3,127 @@
 #include <stdio.h>
 #include <string.h>
 #include "hash.h"
+#define HASH_DEBUG "HASH_DEBUG"
 
-unsigned long doHash(unsigned char *str, unsigned size)
+void printDebug(char *msg)
 {
- unsigned long hash = 5381;
- int c;
-
- while (c = *str++)
- hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
-
- return hash % size;
+	char *hashDebug = getenv(HASH_DEBUG);
+	if (hashDebug != NULL && strcmp(hashDebug, "y") == 0)
+	{
+		printf("%s\n", msg);
+	}
 }
 
-void hashInit(HashInt *hash, int size)
+unsigned
+doHash(unsigned char *str, unsigned size)
 {
- hash->size = size;
- hash->data = (HashElement *)calloc(size, sizeof(HashElement));
+unsigned hash = 5381;
+int c;
+
+while (c = *str++)
+hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+
+return hash % size;
+}
+
+void hashInit(HashInt *hash, unsigned size)
+{
+hash->size = size;
+hash->data = (HashElement *)calloc(size, sizeof(HashElement));
 };
+
+static void hashDoInsert(HashInt *hash, char *key, int value)
+{
+char errorMessage[255];
+printDebug("dohash");
+unsigned index = doHash(key, hash->size);
+printDebug("dohash2");
+HashElement *currentHashElement = &(hash->data[index]);
+sprintf(errorMessage, "index %d", index);
+printDebug(errorMessage);
+if (currentHashElement->elements == NULL)
+{
+printDebug("CHECKING DATA");
+currentHashElement->elements = (Element *)malloc(2 * sizeof(Element));
+currentHashElement->count = 0;
+currentHashElement->length = 2;
+}
+if (currentHashElement->length == currentHashElement->count)
+{
+currentHashElement->length *= 2;
+currentHashElement->elements = (Element *)realloc(currentHashElement->elements,
+currentHashElement->length * sizeof(Element));
+}
+printDebug("Assigning");
+currentHashElement->elements[currentHashElement->count].key = strdup(key);
+currentHashElement->elements[currentHashElement->count].value = value;
+currentHashElement->count += 1;
+printDebug("Completed");
+}
+
+static void hashDoUpdate(HashInt *hash, char *key, int value)
+{
+int pos = doHash(key, hash->size);
+int i;
+Element *currentElements = hash->data[pos].elements;
+int currentElementsLength = hash->data[pos].count;
+
+for (i = 0; i < currentElementsLength; i++)
+{
+if (strcmp(key, currentElements[i].key) == 0)
+{
+currentElements[i].value = value;
+break;
+}
+}
+}
 
 void hashInsert(HashInt *hash, char *key, int value)
 {
- 	int index = doHash(key, hash->size);
-	HashElement * currentHashElemets = &(hash->data[index]);
-
- 	if(currentHashElemets[index].elements == NULL) {
- 		currentHashElemets->elements = (Element *)malloc(2*sizeof(Element));
- 		currentHashElemets->count  = 0;
- 		currentHashElemets->length = 2;
- 	}
- 	if(currentHashElemets->length == currentHashElemets ->count )
- 	{
- 		currentHashElemets->length *= 2;
- 		currentHashElemets->elements = realloc(currentHashElemets->elements,
- 											  currentHashElemets->length*sizeof(Element));
- 	}
- 	currentHashElemets->elements[currentHashElemets->count].key   = strdup(key);
- 	currentHashElemets->elements[currentHashElemets->count].value = value;
- 	currentHashElemets->count += 1; 
-}
-
-
-
-int *hashGet(HashInt *hash,char *key)
+int *oldValue = hashGet(hash, key);
+if (oldValue == NULL)
 {
-	int pos = doHash(key, hash->size);
+hashDoInsert(hash, key, value);
+}
+else
+{
+hashDoUpdate(hash,key,value);
+}
+};
+
+int *hashGet(HashInt *hash, char *key)
+{
+int pos = doHash(key, hash->size);
+int i;
+Element *currentElements = hash->data[pos].elements;
+int currentElementsLength = hash->data[pos].count;
+int *value = NULL;
+
+for (i = 0; i < currentElementsLength; i++)
+{
+if (strcmp(key, currentElements[i].key) == 0)
+{
+value = (int *)malloc(sizeof(int));
+*value = currentElements[i].value;
+break;
+}
+}
+return value;
+};
+
+
+void forEach ( HashInt *hash, void(* func)(char *key, int value))
+{
 	int i;
-	int *value = NULL; 
-	Element *currentElemets = hash->data[pos].elements;
-	int currentElemetsLenght = hash->data[pos].count;
-	for ( i=0; i < currentElemetsLenght ; i++ )
+	int j;
+	for ( i=0 ; i < hash->size; i++)
 	{
-	//	if (strcmp(key, currentElemets[i].key == 0))
-	//	{
-			value = (int *) malloc(sizeof(int));
-			*value = currentElemets[i].value;
-			break;
-	//	}
+		if ( NULL != hash->data[i].elements)
+		{
+			for ( j = 0 ;  j < hash->data[i].count ; j++  )
+			{
+				func(hash->data[i].elements[j].key , hash->data[i].elements[j].value);
+			}
+		}
 	}
-	return value;
 }
