@@ -14,7 +14,7 @@ int main ( int argc, char **argv)
 
 	Student myStudent;
 	char *lastName = "Perez2";
-	char *studentDb = "studentDB.data";
+	char *studentDb = "studenDB.data";
 	FILE *data;
 
 	data = fopen(studentDb,"rb");
@@ -30,7 +30,6 @@ int main ( int argc, char **argv)
 			printf("lastname %s\n",myStudent.lastName );
 			printf("id %d\n",myStudent.id);
 			printf("grad %d\n",myStudent.cal);
-			break;
 		}
 	}
 

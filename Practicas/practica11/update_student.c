@@ -26,10 +26,9 @@ int main ( int argc, char **argv)
 			break;
 		}
 		if(!strcmp(myStudent.lastName,lastName)){
-			printf("name %s\n", myStudent.name);
-			printf("lastname %s\n",myStudent.lastName );
-			printf("id %d\n",myStudent.id);
-			printf("grad %d\n",myStudent.cal);
+			sprintf(myStudent.name,"Pedro");
+			fseek(data,-1*sizeof(Student),SEEK_CUR);
+			fwrite(&myStudent,sizeof(Student),1,data);
 			break;
 		}
 	}

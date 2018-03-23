@@ -9,6 +9,7 @@ int main (int argc, char **argv)
 	char *replace = argv[2];
 	char isReplaced =0;
 	int character;
+	int firstCharacter;
 	long streamPos = 0;
 	int i=0;
 	FILE * myFile = fopen(fileName,"r");
@@ -16,6 +17,7 @@ int main (int argc, char **argv)
 	{
 		
 		character = fgetc(myFile);
+		firstCharacter = character;
 		streamPos = ftell(myFile);
 		if( feof(myFile))
 		{
