@@ -17,6 +17,7 @@ int main(int argc, char const *argv[]) {
     char *fileName = " studentDB.data";
     int fd = open(fileName, O_RDWR);
     char name[20];
+    int index=0;
     Student * pavanzada = (Student *) mmap(
                           NULL,
                           5*sizeof(Student),
@@ -25,7 +26,8 @@ int main(int argc, char const *argv[]) {
                           fd,
                           0
                           );
-  while(4)
+  while(index++<4)
+
   {
     printf("Provide id , new name\n" );
     scanf("%d %s\n",&id, name );
