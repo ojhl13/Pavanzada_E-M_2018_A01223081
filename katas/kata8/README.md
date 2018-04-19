@@ -13,3 +13,6 @@ When building your function:
 
 
 La manera directa de hacer esto es con un For que recorra los datos hasta encontrar que dos datos te den la suma pero esto tendria un tiempo de procesamiento que se peude alargar si la lista de peliculas es larga.
+
+
+hare esta version y pienso que ordenar la lista de peliculas podria ser de ayuda asi podrias tomar la de mayo longitud y  solo ir buscando la que mas se acople esto podria reducir la cantidad de vueltas qeu se le de a la lista
