@@ -28,3 +28,16 @@ char  search_movies(int timeflight, int *listMovies  )
   }
   return result;
 }
+
+int int main(int argc, char const *argv[]) {
+  /* code */
+
+  int myInt;
+  int listofMovies[10000];
+  scanf("Time of flight :%d", &myInt);
+  do{
+    scanf(":%d", &listofMovies);
+
+  }while(myInt == EOF);
+  return 0;
+}
