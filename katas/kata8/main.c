@@ -36,8 +36,8 @@ int int main(int argc, char const *argv[]) {
   int listofMovies[10000];
   scanf("Time of flight :%d", &myInt);
   do{
-    scanf(":%d", &listofMovies);
-
+    scanf("add movies for finish only press enter: %d", &listofMovies);
+    listofMovies++;
   }while(myInt == EOF);
   return 0;
 }
